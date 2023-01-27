@@ -1,0 +1,12 @@
+#!/usr/bin/bash
+# A little script to generate a string which includes
+# selected tokens from the date command
+# This script can be called as a timestamp command
+
+DateStamp="$(date +%T\ %d/%m/%Y)"
+echo "Written at ${DateStamp} by process $PPID"
+
+# We use PPID, instead of PID, to make sure that the  
+# process which called this one is recorded. 
+# END OF SCRIPT
+

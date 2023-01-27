@@ -1,0 +1,39 @@
+#!/bin/bash
+#
+# Title:        bcpipe1
+# Purpose:      To allow background operation of the bc calculator
+# Description:  Two named pipes called bcin and bcout, in /tmp will be used. 
+#               Obtain the file name from the first command line 
+#               argument, and write it to pname
+#               Write the contents of pdata to standard output
+# Version:
+# Synopsis:     bcpipe1 <expression>
+#
+
+# Save the requested expression. Notice the use of "$*" – need
+# to preserve all arguments as a single string.
+expr="$*"
+
+# Create the two named pipes
+
+mkfifo /tmp/bcin 2>/dev/null
+mkfifo /tmp/bcout 2>/dev/null
+
+# start bc in the background, connected to bcin for reading and bcout for writing
+bc </tmp/bcin >/tmp/bcout &
+
+# Associate file descriptor 3 for writing into /tmp/bcin
+exec 3>/tmp/bcin 
+# Associate file descriptor 4 for reading from /tmp/bcout
+exec 4</tmp/bcout
+
+
+# Send the requested expression to bc
+echo "$expr" >&3
+
+read result <&4
+
+echo $result
+
+# END OF SCRIPT
+

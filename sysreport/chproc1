@@ -1,0 +1,15 @@
+#!/usr/bin/bash
+# monitor for process completion
+
+############# declarations
+# (1) intercept the first positional parameter from 
+# the script's command line
+#     i.e. instead of searching for a given (hardwired) 
+#	    process, allow its name 
+#     be provided as argument on the command line
+#     no error checking at this stage
+
+proc="sleep"
+
+ps -ef | grep "$proc" | grep -v grep
+

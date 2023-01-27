@@ -1,0 +1,31 @@
+#!/usr/bin/bash
+#
+# Title:	intrange
+# Purpose:	Validate a number is in a given range
+# Description:	Expects three numbers: integer to be tested, a low and high values
+#		Number is tested to be within the range, inclusive
+# Synopsis:	intrange <number> <low value> <high value>
+#
+
+Err1="${0##*/}: Usage: intrange <number> <low value> <high value>"
+Err2='Value out of range'
+
+# Check for the expected positional parameters
+if (( $# != 3 ))
+then
+    echo "$Err1"
+    exit 1
+else
+    int=$1; low=$2; high=$3
+fi
+
+# Validate that the int falls within low and high. If not,
+# display an error message and exit with code 1
+if (( $int < $low || $int > $high ))
+then
+    echo "$Err2" >&2
+    exit 2
+fi
+
+# END OF SCRIPT
+

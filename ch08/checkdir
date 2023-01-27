@@ -1,0 +1,33 @@
+#!/bin/bash
+# Title:	checkdir
+# Purpose:	To check if a name is a directory
+# Description:	First, test that the user provided 
+#              an argument. Then use the if statement 
+#              (with the ‘object’ test) to establish 
+#              if the argument represents a directory. 
+#		If so, list its content
+#
+# Synopsis:	checkdir [filename] 
+
+# Check if input is there, if missing exit 
+# with an appropriate message
+if (( $# != 1 ))
+then
+  echo "Usage: $(basename $0) filename" >&2
+  exit 1
+else
+  filename="$1"
+fi
+
+# Now test if the argument is a directory. 
+# If so, list its contents; if not, exit with 
+# error code 2 and an appropriate message
+if [[ -d $filename ]]
+then
+  echo "$filename is a directory"
+  ls –l $filename
+else 
+  echo "$filename does not exist, or is not a directory"
+  exit 2
+fi
+

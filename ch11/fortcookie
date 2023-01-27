@@ -1,0 +1,32 @@
+#!/bin/bash
+#
+# Title: fortcookie
+# Purpose: To display a randomly selected line from
+# the fortunes file
+# Description: Establish the length of the file
+# then, using system variable RANDOM, select
+# a line number to be printed.
+# Synopsis: fortcookie
+#
+
+file=fortunes
+
+# Get the file length (number of lines, to be precise);
+# We use redirection so that wc gets data
+# without the filename, thus result is just a number.
+# If you wonder why, try
+# 'wc -l $file' then 'wc -l < $file'
+filelength=$(wc -l < $file)
+
+# Calculate a number within the range of file length
+(( rand = $RANDOM % $filelength + 1 ))
+
+# pick up the line indicated by 'rand'
+head -${rand} $file|tail -1
+
+# These three lines can be put into a single command:
+# sed -n "$(((rand=RANDOM % $(wc -l<$file) +1 )))p" $file
+# or:
+# head -$(( (rand=$RANDOM % $(wc -l < fortunes) +1) ))
+# fortunes|tail -1
+

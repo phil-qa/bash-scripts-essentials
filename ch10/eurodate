@@ -1,0 +1,56 @@
+#!/usr/bin/bash
+#
+# Title:	eurodate 
+# Purpose:	Display given date in European format
+# Description:	Asks for a date and presents it on the
+# 		Allow input string to be:
+#		dd/mm/yy, dd-mm-yy or dd.mm.yy
+# Synopsis:	eurodate
+#
+# First save IFS. We will not need the original IFS 
+# again, but it is good practise to save it anyway.
+oldIFS="$IFS"
+
+# For the read command, redefine IFS to accommodate
+# the allowed word separators.
+IFS="/-."
+read -p 'Give me a date ' day month year
+IFS="$oldIFS"
+
+# Remove leading zero (if it exists)
+day=${day#0}
+month=${month#0}
+
+# Validate day of month
+# Define the valid day range (1 to 31), then process 
+low=1;high=31
+if ! intrange $day $low $high
+then exit 
+fi
+
+# Validate month
+# Define the valid month range (1 to 12), then process 
+low=1;high=12
+if ! intrange $month $low $high 
+then exit
+fi
+
+# Process year value
+if getyear $year 
+then 
+    # If year has four digits, extract last two of them
+    if (( ${#year} == 4 ))
+    then
+        year=${year:2}    # Could have used ${year#??}
+    fi
+else
+    exit
+fi
+
+# Display formatted output
+echo "day is:   $day"
+echo "month is: $month"
+echo "year is:  $year"
+
+# End of script
+

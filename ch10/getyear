@@ -1,0 +1,29 @@
+#!/usr/bin/bash
+#
+# Title:	getyear 
+# Purpose:	To validate that an integer is a valid year format
+# Description:	Asks for a four or two digit year
+# Synopsis:	getyear <two or four digit number>
+#
+Err1="Argument missing"
+Err2='Year must be two or four digits'
+
+# Check positional parameter exists. If not display error and exit 1
+if (( $# != 1 ))
+then
+    echo "$Err1" >&2
+    exit 1
+else
+    year="$1"
+fi
+
+# Validate year value to be either in two or four digit format
+if (( ${#year} != 4  &&  ${#year} != 2 ))
+then
+    echo "$Err2" >&2
+    exit 2
+fi
+
+
+
+

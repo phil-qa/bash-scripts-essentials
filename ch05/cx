@@ -1,0 +1,12 @@
+#!/usr/bin/bash
+# Title:	cx
+# Purpose:	Add execute permission to all files given
+#              as arguments
+# Description:	The x permission will be applied to all 
+# 		positional parameters provided
+# Synopsis:	cx [file...]
+
+/usr/bin/chmod +x "$@"
+
+# END OF SCRIPT
+

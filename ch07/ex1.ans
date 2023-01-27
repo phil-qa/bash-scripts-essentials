@@ -1,0 +1,21 @@
+a)	In a multi-stage pipeline involving five child processes, which process's exit value is in $? when the pipeline completes?
+Answer: 
+The last (rightmost) process of the pipeline
+
+b)	Which program may be used to save intermediate data as it flows through a pipeline.
+Answer: 
+The tee command allows saving the output of a command in a file before it is passed to stdout.
+
+c)	What does tail -n +2 file command do?
+Answer:
+It will list the file starting with line 2. Useful for skipping headers in data stream.
+
+d)	What are the methods of providing data through standard input?
+Answer:
+The default source of standard input is the keyboard. Data can also be provided to standard input through shell redirection (either from a file, 'here document' or ‘here string’) or through a pipe.
+
+e)	What are the methods of providing data to the tr command ?
+Answer:
+The tr command is not capable of opening files, and can only receive data through its standard input (using stdin redirection or a pipe mechanism).
+ 
+

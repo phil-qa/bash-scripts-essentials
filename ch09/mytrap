@@ -1,0 +1,22 @@
+#!/bin/bash
+#
+# Title:	mytrap
+# Purpose:	To illustrate the behaviour of trap
+# Description:	When trap is set, it is applied to the process in which it
+#		was defined. Subshells are not trapped.
+# Synopsis:	mytrap (followed by CTRL-C)
+
+# Set trap for signals INT, QUIT, and TERM
+trap 'echo "trapping..."' INT QUIT TERM
+echo "about to go to sleep"
+
+# Start a child process (could be anything, as long as it is a sub-shell)
+sleep 5
+
+# As long as CTRL_C is hit whilst the sleep is still going, you should see 
+# that sleep (sub-shell) is interrupted, but not the shell script that defined
+# the trap. Hence the last print command should display the 'awake' message.
+
+echo 'awake again; bye'
+
+# End of script

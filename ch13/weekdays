@@ -1,0 +1,41 @@
+#!/bin/bash
+#
+# Title:        weekdays
+# Purpose:      To execute selected commands depending on
+#               the day of the week.
+# Description:  Check the day of the week, then list the 
+#               appropriate directories to be backed up.
+# Version:
+#
+
+# Get the day of the week
+day=$(date +%a)
+
+# On RedHat, reduce the day to 2 characters.  
+if [[ $MACHTYPE == *redhat* ]]
+then
+   day=${day:0:2}
+fi
+
+case $day in
+  So|Su)  dirs='/var/log'
+          name=Sun;;
+  Mo)     dirs='/var,/etc,/usr,/home'
+          name=Mon;;
+  Di|Tu)  dirs='/var/log,/home'
+          name=Tues;;
+  Mi|We)  dirs='/var/log,/sbin,/bin,/home'
+          name=Wednes;;
+  Do|Th)  dirs='/var,/lib,/usr,/home'
+          name=Thurs;;
+  Fr)     dirs='/var/log,/home,/etc'
+          name=Fri;;
+  Sa)     dirs='/var'
+          name=Satur;;
+   *)     echo "Invalid day: $day" >&2
+           exit 1;;
+esac
+
+echo "Backup schedule for ${name}day is: $dirs"
+# End of script
+

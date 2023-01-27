@@ -1,0 +1,9 @@
+function me {
+if [[ $USER == @(nqq|root) ]] 
+then
+    dir=~/odb-codes
+else 
+    dir=~/tmp/data
+fi
+}
+

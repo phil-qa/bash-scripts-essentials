@@ -1,0 +1,4 @@
+function f_findn {
+find / -name $1 -ok rm {} \;
+}
+

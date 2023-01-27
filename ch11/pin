@@ -1,0 +1,42 @@
+#!/bin/bash
+#
+# Title:   pin
+# Purpose: To check a personal identification number
+# Description: Using a test to perform an operation a 
+# predetermined number of times. Here checking a pin 
+# number will be allowed, say, three times, after 
+# which the script will fail
+
+# Synopsis: pin 
+
+# Setup the valid pin number, limit of allowed tries
+# and initialise an integer counter to 0
+pin='0138'
+limit=3
+declare –i counter=0
+
+# setup a while loop to execute not more than the 
+# limit dictates 
+while (( $counter < $limit ))
+do
+   # get user input
+   read -sp 'Please enter your PIN ' input
+   echo
+   (( counter++ ))
+   # if the pin matches, break out of the loop    if [[ $input == $pin ]]
+   then
+      break
+   fi
+done
+
+# Inform the user of the overall success or failure of their attempt(s)
+if [[ $input != $pin ]]
+then
+   echo "Well done, you remembered it!"
+   echo "... and only after $counter attempts"
+else
+   echo “You had $limit tries and failed!"
+fi
+
+# End of script
+

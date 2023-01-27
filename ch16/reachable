@@ -1,0 +1,31 @@
+#!/bin/bash
+#
+# Title:	reachable
+# Purpose:	To display re-reformatted 
+#		selected lines in a table
+# Description:  Read a data file (table) line at a time.
+#		If the line matches a rule, print it out
+#		using a formatted output.
+#              tar of a file/directory to chosen
+#              destination directory.
+# Version:		
+# Synopsis:	reachable
+#
+
+
+printf '%-16s %-10s %-18s\n' ip nic mac
+
+while read ip dev nic lladdr mac status
+do 
+    if [[ $lladdr == FAILED ]]
+    then 
+        continue
+    elif [[ $status == REACHABLE ]]
+    then
+        printf '%-16s %-10s %-18s\n' $ip $nic $mac
+    else
+        continue
+    fi
+done < /home/nqq/tables/neighbours
+
+# END OF SCRIPT

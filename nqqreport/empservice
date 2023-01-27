@@ -1,0 +1,26 @@
+#!/usr/bin/bash
+#
+# Title:        empservice
+# Purpose:      Using employees table
+#               display a list of long service
+# Description:  For the purpose of this exercise, use the
+#               the employees table provided in /home/nqq/tables.
+# Used scripts: none
+# Useful commands:
+#        sort (to sort the employees table according to the last field)
+#        read (Cinside the while loop to process each line in turn)
+#        set (to create positional parameters)
+# Synopsis:     empservice
+
+printf "%-12s %-15s %-18s\n" "First name" Surname "Length of service"
+
+IFSorig="$IFS"
+IFS=";,-"
+while  read line 
+do
+    set -- $line
+    printf "%-12s %-15s %2d %5s %2d %6s\n" $1 $2 $(( $7 / 12 )) years $(( $7 % 12 )) months 
+done <  <(sort -t\; -k7nr employees)
+    
+IFS="$IFSorig"
+

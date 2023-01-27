@@ -1,0 +1,9 @@
+function f_isdir {
+    if [[ -d $1 ]]; then
+	    return	
+    else
+	    echo "$1 is not a directory"
+	    return 1
+    fi
+}
+

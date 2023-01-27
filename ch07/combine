@@ -1,0 +1,23 @@
+#!/bin/bash
+#
+# Title:        combine
+# Purpose:      To merge two files, line by line
+# Description:  The script will print two files one line
+#               at a time, alternating between the two
+#               files, ie. printing the first line from
+#               the first file, then the first line from
+#               the second file, etc.
+# Synopsis:     combine <file1> <file2>
+#
+# Save positional parameters
+scriptname=$(basename $0)
+file1=$1
+file2=$2
+
+# Open file one for reading (argument one) on file descriptor 3
+exec 3< $file1
+
+# Open file two for reading (argument two) on file descriptor 4
+exec 4< $file2
+
+

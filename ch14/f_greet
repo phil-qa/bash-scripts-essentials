@@ -1,0 +1,8 @@
+function f_greet {
+	local a c 	   # define local variables
+	a=hello		   # modify local variable a
+	b=bonjour		   # modify 'global' variable b
+	c=witaj		   # modify local variable c
+ 	echo "Function sees: a=$a b=$b c=$c"
+}
+

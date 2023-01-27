@@ -1,0 +1,37 @@
+#!/bin/bash
+#
+# Title:	classmenu
+# Purpose:	Present content of current directory as
+#		a menu for the classify script
+# Description:	Uses select statement to generate list of 
+#		all files in the current directory.
+# Scripts used: classify
+# Version:		
+# Synopsis:	classmenu
+#
+# Allow selection of a file from the current directory
+PS3="Choose a number for directory entry > "
+
+select entry in * QUIT
+do
+   # If the user made a bad choice, 
+   # 'entry' will be zero length
+   if [[ -z $entry ]]
+   then
+      echo "Invalid choice \"$REPLY\", hit return"
+      continue
+   fi
+
+   # If user selected QUIT option, break out of the loop
+   if [[ $entry == 'QUIT' ]]
+   then
+      break
+   fi
+   
+   # Call the classify script, with the selected value as
+   # an argument
+   classify $entry
+done
+
+# End of script
+

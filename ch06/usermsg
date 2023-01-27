@@ -1,0 +1,5 @@
+#!/bin/bash
+write user16 << HereDocument
+hello, how is your tty?
+HereDocument
+

@@ -1,0 +1,10 @@
+#!/usr/bin/bash
+# Title:	userid
+# Purpose:	To display on stdout user name 
+# and the host name of the machine.
+# Synopsis:	userid
+# Commands used: whoami; uname –n 
+# Techniques used: command substitution
+
+echo "$(whoami) running on $(uname –n)"
+

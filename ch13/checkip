@@ -1,0 +1,75 @@
+#!/bin/bash
+#
+# Title:        checkip
+# Purpose:      To validate the format of input data.
+# Description:  Ask for the IP address and check it has a
+#               correct format, ie four numbers separated
+#               by a dot.
+# Version:
+# Synopsis:     checkip
+#
+# Declare integer variables used for testing address
+# tokens
+declare -i ip1 ip2 ip3 ip4
+shopt -s extglob                  # Use extended globbing
+
+# Get the input string
+read -p 'Enter IP address in x.x.x.x form > ' address
+
+# Before we test the range of each token, we will test
+# the overall format. Test for the actual value range
+# will be done later.  The pattern +([0-9]). means at
+# least one digit followed by a dot
+
+if [[ $address != +([0-9]).+([0-9]).+([0-9]).+([0-9]) ]]
+then
+   echo 'IP address must be number.number.number.number' >&2
+   exit 1
+fi
+
+# Now we will test that each token falls into the allowed
+# range.  Trick here is to redefine the IFS first, so we
+# read the address into four separate words. This will
+# make it easier to test the allowed range of each token
+# of the address.
+
+IFSold="$IFS"
+IFS=.
+
+read ip1 ip2 ip3 ip4 <<< "$address"
+
+# Restore the original IFS. Although we do not need it
+# again, it is a good practice to leave it intact in case
+# the script gets re-used or modified in future.
+IFS="$IFSold"
+
+# Now check each number in turn for the correct range.
+# IP numbers may be in the range 1 to 254 (we assume that
+# all 0s or all 1s are not allowed).
+for number in $ip1 $ip2 $ip3 $ip4
+do
+   if (( $number < 1 || $number > 255 ))
+   then
+        echo 'Number(s) outside range' >&2
+        exit 1
+   fi
+done
+
+# Check the address class, for good measure. By the way,
+# for simplicity we assume that every network over 192 is
+# class C.  
+# Neither do we cater for addresses that are reserved...
+# Network gurus will quite rightly question this ;-)
+
+if (( $ip1 < 128 ))
+then
+   echo "$address is network class A"
+elif (( $ip1 >= 128 && $ip1 < 192 ))
+then
+   echo "$address is network class B"
+else
+   echo "$address is network class C"
+fi
+
+# End of script
+

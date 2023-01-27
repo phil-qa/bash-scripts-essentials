@@ -1,0 +1,8 @@
+#!/usr/bin/bash
+
+# setting up environment for the sysreport project
+# location in ~/sysreport/.sysreportrc
+
+source /home/nqq/labs/sysreport/.sysreportrc
+
+

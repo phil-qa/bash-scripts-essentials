@@ -1,0 +1,12 @@
+Nmap scan report for raspberry-pi (10.0.2.1)
+Host is up (.0037s latency)
+
+Nmap scan report for qa-term1 (10.0.2.10)
+Host is up (.0037s latency)
+
+Nmap scan report for qa-term2 (10.0.2.11)
+Host is up (.0037s latency)
+
+Nmap scan report for qa-term3 (10.0.2.12)
+Host is up (.0037s latency)
+

@@ -1,0 +1,34 @@
+a)	Which command will show records for all contractors?
+Answer: 
+$ grep –c '^$' employees
+Were you tempted to use the wc tool here? It would, of course, work but is unnecessary and an overhead.
+b)	Show all countries that are not in R&D?
+Answer: 
+$ grep -v 'R&D' employees
+c)	How many employees are either software or hardware engineers?
+Answer: 
+$ grep -ciE 'software|hardware' employees
+d)	Display the employee first name and surname.
+Answer:
+$ cut –d\; -f1-2 employees
+e)	Display the employee first name, surname and the length of service. Translate each semicolon to a tab character when stdout is generated.
+Answer: 
+$ cut –d\; -f1-2,7 employees | tr ';' '\t'
+Alternatively, awk can to this job as well.
+$ awk -F\; 'OFS="\t" {print $1,$2,$7}' employees
+f)	List the first three letters of each surname.
+Answer: 
+$ cut –d\; -f2 employees | cut -c1-3 
+g)	List the first three letters of each surname, but only for employees working in R&D.
+Answer: 
+$ grep ‘R&D’ employees | cut –d\; -f2 | cut -c1-3
+h)	List first name and surname of five employees that have been employed the longest (at the output, first name and surname should be separated with a tab).
+Answer: 
+$ sort -t\; -k7nr employees | head -5 | cut -d\; -f1,2 | tr ';' '\t'
+
+Or, using awk instead of cut and tr:
+$ sort -t\; -k7nr employees | head -5 | awk -F\; 'OFS="\t" {print $1,$2}'
+i)	Show all the different office locations in the employees table.
+Answer: 
+$ cut –d\; -f4 employees | sort | uniq
+

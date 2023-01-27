@@ -1,0 +1,41 @@
+#!/bin/bash
+#
+# Title:	getcode1
+# Purpose:	To extract the description of the ODB diagnostics
+#         	based on the 'P' code obtained from the user
+# Description:	The script will first ask the user for the code
+#		After validating the code number, the odb-codes
+#		table will be consulted and the corresponding
+#		diagnostics description will be displayed
+# Synopsis:	getcode1
+# Declare a variable with the location of the odb codes, making
+# sure the table exists before assigning it. On failure, exit 
+# script with appropriate error message and exit code of 1.
+if [[ -f /home/nqq/tables/odb-codes && -r /home/nqq/tables/odb-codes ]]
+then
+    codes=/home/nqq/tables/odb-codes
+else
+    echo "Can't read the odb-codes table"
+    exit 1
+fi
+
+# Get the 'P' code from the user
+read -p "What is the diagnostics code? " pcode
+
+# Validate that the code exists in the odb-codes table
+if  line=$(grep  "$pcode" "$codes" )
+then 
+    # here, we use the deleting string method; 
+    # the line such as: 16944 P0560 System Voltage Malfunction
+    # needs the first two fields stripping off
+    # Reading $line from the left, match all characters until (and including)
+    # the $pcode, and return all remaining characters.
+    eval echo '${line#*'$pcode'}'
+else
+    echo "Invalid code. Try again "
+    exit 2
+fi
+
+
+
+

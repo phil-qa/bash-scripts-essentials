@@ -1,0 +1,42 @@
+#!/usr/bin/bash
+# monitor for process completion
+
+############# declarations
+# (1) use a ps and grep pipeline to identify all 
+#     sleep processes
+# (2) intercept the first positional parameter from 
+#     the script's command line
+#     i.e. instead of searching for a given (hardwired) 
+#     process, allow its name 
+#     be provided as argument on the command line
+#     no error checking at this stage
+# (3) - check that variable proc has a value before 
+#       running ps; 
+#       if not exit the script with error code 1
+#     - ensure that sleep as argumment to your script 
+#       is not captured (use process substitution for 
+#       reading ps –ef output and assign each line read 
+#       as argument to set). Notice that this should
+#       allow you to get rid of grep!
+# (4) Instead of bombing out when the proc value is 
+#     missing, we will allow the user to enter the i
+#     process name interactively, using the read command
+
+Err1="No process name to look for... "
+Err2="Process to be monitored does not exist... "
+
+proc="$1"
+
+# if proc variable is zero length i.e. doesn't exist
+if [[ -z $proc ]]	
+then 
+    read -p"Give me process to be monitored: " proc
+fi
+while read -r line
+do
+    set -- $line
+    #  $8 (process name) includes pathname: strip it off
+    if [[ ${8##*/} == $proc ]]
+    then echo $line
+    fi
+done <  <(ps -ef)

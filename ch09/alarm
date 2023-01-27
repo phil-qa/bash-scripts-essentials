@@ -1,0 +1,41 @@
+#!/usr/bin/bash
+#
+# Title:	alarm
+# Purpose:	Display on stdout, after a given
+#              delay, a line of text
+# Description:	The text will be printed three times,
+#              at 3 second intervals. Each printing
+#              will alternate between the normal and
+#              reversed order of the message content
+# Used scripts: reverse
+# Synopsis:	alarm timeout message
+#
+
+# Save the positional parameters as meaningful names
+# so that they can be manipulated easier
+timeout=$1
+
+# Don't need the first parameter, 
+# what is left is the message
+shift
+
+# When storing the rest of the positional 
+# parameters, take care to quote any spaces or 
+# other special characters
+message="$*"
+
+/bin/sleep $timeout
+echo "$message"
+/bin/sleep $timeout
+# once permissions and PATH are
+# sorted the line below will work
+#reverse $message 
+
+# workaround, until permissions and PATH are sorted:
+bash $HOME/labs/ch05/reverse $message
+/bin/sleep $timeout
+#echo "$message"
+echo "$message
+
+# END OF SCRIPT
+

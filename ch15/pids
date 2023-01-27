@@ -1,0 +1,36 @@
+#!/bin/bash
+#
+# Title:        pids
+# Purpose:      To create a list of process ids so they
+#               may be submitted to a command (e.g. kill)
+# Version:      QA Feb 2016
+# Description:  Identify PIDs running on a terminal and
+#               store them in an array, which can then 
+#               be used by a command.
+# Synopsis:     pids [terminal]
+# Get the terminal id. 
+if (( $# < 1 ))
+then
+   read -p 'Which screen > ' screen
+   if [[ -z $screen ]];  then
+      echo "$(basename $0): No screen number" >&2
+      exit 1
+   fi
+else
+   screen=$1
+fi
+
+# in BASH
+while read -a pids
+do
+   echo ${pids[0]}
+
+done  <  <(ps -t $screen | tail –n +2)
+
+# Or, even simpler (but using more external commands) 
+# would be the following one-liner:
+#pids=($(ps -t $screen | tail -n +2 | cut -d ‘ ‘  -f1))
+
+
+# End of script
+

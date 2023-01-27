@@ -1,0 +1,39 @@
+#!/usr/bin/bash
+#
+# Title:	getip1
+# Purpose:	Using output of nmap -sP192.168.1.0/24
+#              	display IP address of a host
+# Description:	For the purpose of this exercise, use the
+#              	nmap-hosts file with a sample of nmap output
+#              	provided in /home/nqq/tables.
+#		Error control: exit the script if positional parameter is absent
+#		No residual temporary files will be left by this script
+# Used scripts: none
+# Useful commands: 
+#        tr (to remove brackets surrounding the IP addresses in the nmap-hosts table)
+#	 grep (to extract the line for the host) 
+#	 set (to create positional parameters out of grep output line)
+# Synopsis:	getip1 <hostname>
+#
+#
+
+# Test if exactly one positional parameter is present
+
+if (( $# == 1 ))
+then
+	host="$1"
+else
+	echo "Usage: $(basename $0) <hostname>" >&2
+	exit 1
+fi
+
+# strip the file of brackets
+tr -d '()' < /home/nqq/tables/nmap-hosts > /tmp/nmap-hosts
+
+# convert the line into positional parameter list
+set -- $(grep -i "$host" /tmp/nmap-hosts)
+
+echo $host has IP of $6
+
+# remove temporary file
+rm /tmp/nmap-hosts

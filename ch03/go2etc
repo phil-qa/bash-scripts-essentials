@@ -1,0 +1,21 @@
+#!/usr/bin/bash
+#
+# Title:	go2etc
+# Purpose:	A little script which illustrates the 
+# 		local scope of the child environment
+# Description:	Show the location, change the location, 
+# 		then show the result
+# Version:
+# Synopsis:	go2etc
+#
+
+pwd
+cd /etc
+pwd
+
+# Within this script, the location in the filesystem HAS 
+# changed,but when you return to the calling shell, you 
+# will find that its location is the same as before
+
+# End of script
+

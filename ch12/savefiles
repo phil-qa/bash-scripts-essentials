@@ -1,0 +1,35 @@
+#!/bin/bash
+#
+# Title:	savetables
+# Purpose:	To save data files in files of the same
+#		name with yymmddMM suffix (after a .), in a backup
+#		directory. Create a backup of the saved files.
+# Description:	All files in in the 'tables' directory
+#               are to be processed in turn, and copied
+#		into file name with a new suffix. The
+#		suffix to be established based on the 
+#		current date. The backup directory will have the 
+#		same name as the suffix.
+# Synopsis:	savetables
+#
+BaseDir="/home/nqq"
+dir="tables"
+
+# Generate suffix in the form: .yymmddMM
+suffix="$(date +%y%m%d%M)"
+
+# Create a backup directory
+mkdir "$BaseDir/$suffix"
+
+# change into the base directory
+cd "$BaseDir/$dir"
+
+
+# Create a for loop to process all files in the tables directory
+for file in *
+do
+    cp -v "$file" "$BaseDir/$suffix/$file.$suffix"
+
+done
+
+# END OF SCRIPT

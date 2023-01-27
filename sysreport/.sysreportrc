@@ -1,0 +1,11 @@
+RootDir="/home/nnq/labs/sysreport"
+BinDir="$RootDir/bin"
+DataDir="$RootDir/etc"
+LogDir="$RootDir/log"
+Ver="$(date +%d/%m/%Y-%H:%m)"
+
+export RootDir BinDir DataDir LogDir Ver
+
+# testing line
+echo printing values to test only
+echo "$RootDir $BinDir $DataDir $LogDir $Ver"

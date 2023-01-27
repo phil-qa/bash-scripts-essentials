@@ -1,0 +1,20 @@
+#!/usr/bin/bash
+#
+# Title:	fileinfo
+# Purpose:	show attributes of a file
+# Description:	Ask for file name, the run ls -li and 
+#		file commands on it
+# Synopsis:	fileinfo
+#
+
+# This is early days in the course, 
+# so we will not perform
+# any checks on the validity of the input...
+
+# Ask for the filename
+read -p "Give me a file name > " filename
+ls -li $filename
+file $filename
+
+# END OF SCRIPT
+

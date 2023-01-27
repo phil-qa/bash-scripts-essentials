@@ -1,0 +1,53 @@
+#!/bin/bash
+#
+# Title:        mypass
+# Purpose:      To automate password change
+# Description:  Use the co-process to start the passwd
+#               command.  The new password is hardwired
+#               into the script (see notes on security
+#               implications below).  The existing 
+#               password, and the new one are sent to the
+#               passwd command through a co-process pipe.
+# Version:
+# Synopsis:     mypass
+#
+# If used inappropriately, it may open a security hole.
+# Normally, this kind of script could be used by root. If
+# so, the old password doesn't need to be given. Also,
+# the new password would be generated dynamically, and
+# user account set to modify the password on first login.
+
+# The method below illustrates one method of generating
+# new password string automatically.
+# Temporary file used here is only for testing purposes 
+# In real life you would NEVER leave such a file behind.
+set -x
+echo "$(head -$RANDOM /usr/share/dict/words | 
+tail -1)$RANDOM" >/tmp/pass
+
+newpass=$(</tmp/pass)
+
+# Assume our password is the same as our login name
+# You need to correct the assignment below)
+oldpass=$LOGNAME
+
+# Stderr is redirected, to avoid seeing questions
+# (all passwd prompts come through stderr)
+
+exec 3> >(passwd 2>/dev/null)
+sleep 1
+
+# First, send the current password.
+echo "$oldpass" >&3
+sleep 1         # let the data sync
+
+# Send the new password
+echo "$newpass" >&3
+sleep 1
+
+# Retype the new password
+echo "$newpass" >&3
+sleep 1
+
+# END OF SCRIPT
+

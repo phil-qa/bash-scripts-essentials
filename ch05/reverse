@@ -1,0 +1,13 @@
+#!/usr/bin/bash
+#
+# Title:	reverse
+# Purpose:	To display on stdout up to 9
+#              	arguments provided on
+# 		the command line, in reversed order
+# Synopsis:	reverse [arg1]... [arg9]
+#
+
+echo $9 $8 $7 $6 $5 $4 $3 $2 $1
+
+# End of Script
+

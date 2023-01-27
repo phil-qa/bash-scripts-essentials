@@ -1,0 +1,40 @@
+#!/bin/bash
+#
+# Title:	toolmenu
+# Purpose:	To present selected programs as menu
+# Description:	Selected programs from the home bin
+#              directory are presented, with the use of
+#              'select' as a menu to choose from. Only
+#              tools that do not require command line
+#              arguments can be used with the solution.
+# Synopsis:	toolmenu
+#
+
+ErrBadChoice='Program does not exist'
+
+PS3='Select the number for the program > '
+# Being a general solution, script names are hard-coded.
+# In real life, you may choose to
+# use wildcards or other method generating program names.
+
+select script in class.menu header QUIT
+do
+   # If user made a bad choice, 'script' will be empty
+   if [[ -z $script ]]
+   then
+      echo $ErrBadChoice
+      echo 'Press Return to see the menu again '
+      continue
+   fi
+
+   # If user selected QUIT, break out of select loop
+   if [[ $script == QUIT ]]
+   then
+      break
+   fi
+
+   $script
+
+done
+# End of script
+

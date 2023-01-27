@@ -1,0 +1,8 @@
+#!/usr/bin/bash
+
+# exercise 1b
+bash reverse one two three four five
+bash reverse this is a script which echos the words in reversed order
+bash reverse 'the Force' is "strong in you"
+bash reverse $(date)
+

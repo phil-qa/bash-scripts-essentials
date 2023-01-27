@@ -1,0 +1,90 @@
+#!/bin/bash
+#
+# Title:        leapyear
+# Purpose:      To read a year and validate if it is a
+#               leap one
+# Description:  The f_number function validates a
+#               variable as a number.
+#               The f_leap function performs 
+#               calculations, to identify leap years.
+#               Script code calls the functions, and,
+#               based on the results, generates
+#               appropriate messages.
+# Version:
+# Synopsis:     leapyear
+#
+#--------------------------------------
+# first define the functions
+
+shopt -s extglob
+
+function f_number
+{
+   # Should be called with one argument - year
+   # Checks data type of input variable: expects an 
+   # integer.  Returns 0 if a number and 1 if not.
+   # If input value missing - return 2
+
+   if [[ $1 == "" ]]
+   then
+      return 2  # missing input value (user hit enter)
+   fi
+
+   if [[ $1 != +([0-9]) ]]
+   then
+      return 1  # input not an integer
+   else
+      return 0  # good input
+   fi
+}
+
+function f_leap
+{
+   # Called with one argument - year, in yyyy format
+   # If the year is exactly divisible by 400
+   # OR
+   # year is not exactly divisible by 100 AND is 
+   # divisible by 4
+   #
+
+   if (( ( $1 % 400 == 0 ) || 
+         ( $1 % 100 != 0 && $1 % 4 == 0 ) ))
+   then
+	      return 0  # yes, it is a leap year
+   else
+      return 1  # no, it is not a leap year
+   fi
+}
+# end of function definitions
+#--------------------------------------
+
+# Main body of the script
+shopt -s extglob
+
+# loop to prompt for years. Type end of file to quit
+
+while read -p 'Enter a year, or quit to finish > ' year
+do
+   f_number $year
+   EXIT=$?
+
+   case $EXIT in
+   0) if f_leap $year
+      then
+        echo "$year is a leap year"
+      else
+        echo "$year is not a leap year"
+      fi;;
+   1) if [[ $year == +(q|quit) ]]
+      then
+        exit 0
+      else
+        echo "Input should be integer, try again"
+      fi ;;
+   2) echo "Missing input value, try again"
+      ;;
+   *) echo "Unknown exit value from f_number: $EXIT" >&2
+      ;;
+   esac
+done
+

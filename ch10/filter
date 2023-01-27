@@ -1,0 +1,51 @@
+#!/bin/bash
+#
+# Title:	filter
+# Purpose:To execute a command that takes a filename as 
+#         an argument on text files in a given directory.
+# Description:	The script will search the directory
+#		(given as $2) for all text files, then execute 
+#		(on those files) the command provided as $1.
+#		If no directory is provided on the command line
+#		a default will be used.
+#		If no command is given, we will ask for it.
+# Synopsis:	filter [command] [directory]
+
+# If no arguments given, no point in continuing
+# At least command name must be provided
+if (( $# < 1 ))
+then
+   read -p 'Please give command to run > ' Cmd
+   if [[ -z $Cmd ]]
+   then
+      echo "${0##*/}: Missing command name" >&2
+      exit 1
+   fi
+else
+   Cmd=$1               # save command name
+fi
+
+# Set default directory in case user doesn't provide it on the command line
+Dir=${2:-'.'}
+
+# Check that command exists
+if ! type $Cmd >/dev/null
+then
+   echo "${0##*/}: $Cmd: command not found" >&2
+   exit 1
+fi
+
+# Search the directory for text files
+# If you have doubts why we use the colon for IFS,
+# then run the “file” command to see its output.
+IFS=':'
+while read name type
+do
+   if [[ $type == *\ text* ]]
+   then
+      $Cmd $name
+   fi
+done < <(file -L $Dir/*)
+
+# End of script
+

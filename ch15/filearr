@@ -1,0 +1,47 @@
+#!/bin/bash
+#
+# Title:	filearr
+# Purpose: Present content of current directory as menu
+#		for the classify script
+# Description:	Uses select statement to generate list of 
+# all ordinary files in the current directory.
+# Scripts used: classify
+# Synopsis:	filearr
+# Create the list of file names
+
+# Declare files as an array
+declare -a files
+i=0		# counter we will use to index the files array
+
+# With the use of a for loop, set up an array called 
+# files, containing all files in the current directory
+for file in *
+do
+   files[$i]=$file
+   (( i++ ))
+done
+
+# Allow selection of a file from the current directory
+# Create a select menu from the elements of our 
+# files array. Remember to incorporate QUIT in the 
+# select construct
+PS3="Choose a number for directory entry > "
+select entry in "${files[@]}" QUIT
+do
+   # Bad input will cause 'entry' to be zero length
+   if [[ -z $entry ]]
+   then
+      echo "$REPLY: invalid choice "
+      continue
+   fi
+   # When QUIT selected, break out of the select loop
+   if [[ $entry == QUIT ]]
+   then
+      break
+   fi
+   
+   # Display what the choice was...
+   echo "Selected entry is: $entry"
+done
+# End of script
+
